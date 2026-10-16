@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Configuración básica del documento y conexión con los estilos. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaVibe — Red Social Fotográfica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Pantalla de carga que se oculta cuando JavaScript termina de iniciar la app. -->
+    <div id="initial-loader" class="initial-loader">
+        <div class="loader-logo">InstaVibe</div>
+        <div class="spinner"></div>
+    </div>
+
+    <div class="app-layout">
+
+        <!-- Navegación principal para pantallas grandes. -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <span class="logo-text">InstaVibe</span>
+                <span class="logo-icon">📸</span>
+            </div>
+
+            <!-- Enlaces que cambian de vista o abren acciones de la aplicación. -->
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-view="feed">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    <span class="nav-label">Inicio</span>
+                </a>
+                <a href="#" class="nav-item" data-action="toggle-search">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <span class="nav-label">Buscar</span>
+                </a>
+                <a href="#" class="nav-item" data-view="explore">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <span class="nav-label">Explorar</span>
+                </a>
+                <a href="#" class="nav-item" data-view="reels">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                    <span class="nav-label">Reels</span>
+                </a>
+                <a href="#" class="nav-item" data-view="messages">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                    <span class="nav-label">Mensajes</span>
+                    <span class="badge" id="msg-badge">3</span>
+                </a>
+                <a href="#" class="nav-item" data-action="toggle-notifications">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                    <span class="nav-label">Notificaciones</span>
+                    <span class="badge red-dot" id="notif-badge"></span>
+                </a>
+                <a href="#" class="nav-item" data-action="open-create-modal">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    <span class="nav-label">Crear</span>
+                </a>
+                <a href="#" class="nav-item" data-view="profile" data-username="emi_sanchez">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80" class="nav-avatar" alt="Perfil">
+                    <span class="nav-label">Perfil</span>
+                </a>
+            </nav>
+
+            <!-- Control global para cambiar entre tema claro y oscuro. -->
+            <div class="sidebar-footer">
+                <button class="theme-toggle-btn" id="theme-toggle" aria-label="Cambiar Tema">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <span class="nav-label">Modo Oscuro</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Barra superior alternativa que se muestra en dispositivos móviles. -->
+        <header class="mobile-header">
+            <span class="logo-text">InstaVibe</span>
+            <div class="mobile-header-actions">
+                <button data-action="toggle-notifications" aria-label="Notificaciones">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </button>
+                <button data-view="messages" aria-label="Mensajes">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Contenedor de todas las vistas principales de la aplicación. -->
+        <main class="main-content">
+
+            <!-- Vista de inicio: historias, publicaciones y sugerencias. -->
+            <section id="view-feed" class="view-container active">
+                <div class="feed-layout">
+                    <div class="feed-column">
+                        
+                        <div class="stories-wrapper">
+                            <div class="stories-container" id="stories-container">
+                                </div>
+                        </div>
+
+                        <div class="feed-posts" id="feed-posts">
+                            </div>
+                    </div>
+
+                    <aside class="right-panel">
+                        <div class="current-user-card" id="current-user-card">
+                            </div>
+
+                        <div class="suggestions-header">
+                            <span class="suggestions-title">Sugerencias para ti</span>
+                            <button class="btn-link font-small">Ver todo</button>
+                        </div>
+
+                        <div class="suggestions-list" id="suggestions-list">
+                            </div>
+
+                        <footer class="panel-footer">
+                            <p>Información · Ayuda · Prensa · API · Empleo · Privacidad · Condiciones</p>
+                            <p class="copyright">© 2026 INSTAVIBE BY EMI</p>
+                        </footer>
+                    </aside>
+                </div>
+            </section>
+
+            <!-- Vista para explorar publicaciones en una cuadrícula. -->
+            <section id="view-explore" class="view-container">
+                <div class="explore-grid" id="explore-grid">
+                    </div>
+            </section>
+
+            <!-- Vista de reels; sus tarjetas se generan desde script.js. -->
+            <section id="view-reels" class="view-container">
+                <div class="reels-wrapper" id="reels-wrapper"></div>
+                <!-- Reel cards are rendered here so each one keeps its own interaction state. -->
+                <div class="hidden">
+                    <div class="reel-card">
+                        <video class="reel-video" poster="https://img.magnific.com/foto-gratis/nube-blanca-cielo-azul_1203-9362.jpg?semt=ais_hybrid&w=740&q=80" controls playsinline loop muted>Tu navegador no puede reproducir este video.</video>
+                        <div class="reel-overlay">
+                            <div class="reel-user-info">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Avatar">
+                                <span>sofia_dev</span>
+                                <button class="btn-outline-sm">Seguir</button>
+                            </div>
+                            <p class="reel-caption">Atardecer perfecto en las montañas 🌲✨ #nature #vibes</p>
+                        </div>
+                        <div class="reel-actions">
+                            <button class="reel-btn act-like"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>24.5k</span></button>
+                            <button class="reel-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg><span>412</span></button>
+                            <button class="reel-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista de mensajes privados y conversaciones. -->
+            <section id="view-messages" class="view-container">
+                <div class="messages-layout">
+                    <div class="chat-list-panel">
+                        <div class="chat-list-header">
+                            <h3>emi_sanchez</h3>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </div>
+                        <div class="chat-items-container" id="chat-items-container">
+                            </div>
+                    </div>
+
+                    <div class="chat-window-panel" id="chat-window-panel">
+                        <div class="chat-empty-state" id="chat-empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="64" height="64"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <h3>Tus Mensajes</h3>
+                            <p>Envía fotos y mensajes privados a un amigo o grupo.</p>
+                        </div>
+
+                        <div class="chat-active-box hidden" id="chat-active-box">
+                            <div class="chat-header" id="chat-header">
+                                </div>
+                            <div class="chat-messages-body" id="chat-messages-body">
+                                </div>
+                            <form class="chat-input-area" id="chat-form">
+                                <input type="text" id="chat-input" placeholder="Escribe un mensaje..." autocomplete="off">
+                                <button type="submit" class="btn-link">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vista de perfil, estadísticas, pestañas y publicaciones. -->
+            <section id="view-profile" class="view-container">
+                <div class="profile-header" id="profile-header">
+                    </div>
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-profile-tab="posts"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg> PUBLICACIONES</button>
+                    <button class="profile-tab" data-profile-tab="saved"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> GUARDADO</button>
+                </div>
+                <div class="profile-posts-grid" id="profile-posts-grid">
+                    </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Panel lateral de búsqueda. -->
+    <div class="search-drawer" id="search-drawer">
+        <div class="drawer-header">
+            <h2>Buscar</h2>
+            <button class="close-btn" id="close-search-btn">&times;</button>
+        </div>
+        <div class="search-input-wrapper">
+            <input type="text" id="search-input" placeholder="Buscar usuarios o publicaciones...">
+            <button id="clear-search-btn" class="hidden">&times;</button>
+        </div>
+        <div class="search-results-container" id="search-results">
+            </div>
+    </div>
+
+    <!-- Panel lateral con las notificaciones del usuario. -->
+    <div class="notifications-drawer" id="notifications-drawer">
+        <div class="drawer-header">
+            <h2>Notificaciones</h2>
+            <button class="close-btn" id="close-notif-btn">&times;</button>
+        </div>
+        <div class="notifications-list" id="notifications-list">
+            </div>
+    </div>
+
+    <!-- Modal para visualizar historias y navegar entre ellas. -->
+    <div class="modal-backdrop hidden" id="story-modal">
+        <div class="story-viewer">
+            <div class="story-progress-bar">
+                <div class="story-progress-fill" id="story-progress-fill"></div>
+            </div>
+            <div class="story-header">
+                <img id="story-user-avatar" src="" alt="Avatar">
+                <span id="story-username">username</span>
+                <span id="story-time" class="story-time">1h</span>
+                <button class="story-close-btn" id="close-story-btn">&times;</button>
+            </div>
+            <img id="story-image" class="story-image-content" src="" alt="Historia">
+            <button class="story-like-btn" id="story-like-btn" aria-label="Me gusta la historia">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <span id="story-like-count">0</span>
+            </button>
+            <button class="story-nav-btn prev" id="story-prev-btn">&lsaquo;</button>
+            <button class="story-nav-btn next" id="story-next-btn">&rsaquo;</button>
+        </div>
+    </div>
+
+    <!-- Modal para seleccionar una imagen y crear una publicación. -->
+    <div class="modal-backdrop hidden" id="create-modal">
+        <div class="modal-box create-box">
+            <div class="modal-header">
+                <h3>Crear nueva publicación</h3>
+                <button class="close-btn" id="close-create-btn">&times;</button>
+            </div>
+            <div class="modal-body create-body">
+                <div class="upload-area" id="upload-area">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <p>Arrastra tu foto aquí o haz click para seleccionar</p>
+                    <input type="file" id="file-input" accept="image/*">
+                </div>
+                <div class="preview-area hidden" id="preview-area">
+                    <img id="image-preview" src="" alt="Vista previa de la publicación">
+                    <textarea id="caption-input" placeholder="Escribe un pie de foto..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-create-btn">Cancelar</button>
+                <button class="btn-primary hidden" id="publish-btn">Publicar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar el nombre y la foto del perfil. -->
+    <div class="modal-backdrop hidden" id="profile-edit-modal">
+        <div class="modal-box profile-edit-box">
+            <div class="modal-header">
+                <h3>Editar perfil</h3>
+                <button class="close-btn" id="close-profile-edit-btn">&times;</button>
+            </div>
+            <form class="modal-body profile-edit-form" id="profile-edit-form">
+                <img id="profile-edit-preview" class="profile-edit-preview" src="" alt="Vista previa del perfil">
+                <label class="profile-photo-picker" for="profile-photo-input">Cambiar foto de perfil</label>
+                <input type="file" id="profile-photo-input" accept="image/*">
+                <label for="profile-name-input">Nombre</label>
+                <input type="text" id="profile-name-input" maxlength="40" autocomplete="name" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" id="cancel-profile-edit-btn">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal que muestra y permite añadir comentarios. -->
+    <div class="modal-backdrop hidden" id="comments-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Comentarios</h3>
+                <button class="close-btn" id="close-comments-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-comment-preview"></div>
+            <div class="modal-body" id="modal-comments-list"></div>
+            <form class="comment-form" id="modal-comment-form">
+                <input type="text" id="modal-comment-input" placeholder="Añade un comentario..." autocomplete="off">
+                <button type="submit" class="btn-link">Publicar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal con la acción para compartir una publicación. -->
+    <div class="modal-backdrop hidden" id="share-modal">
+        <div class="modal-box share-box">
+            <div class="modal-header">
+                <h3>Compartir publicación</h3>
+                <button class="close-btn" id="close-share-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn-primary" id="share-copy-link">Copiar enlace</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes breves de confirmación generados por JavaScript. -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
